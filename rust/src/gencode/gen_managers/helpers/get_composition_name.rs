@@ -4,7 +4,7 @@ pub fn get_composition_name(composition_category: &CompositionCategory, is_type:
     match composition_category {
         CompositionCategory::Carousel(_) => "Carousel",
         CompositionCategory::Banner(_) => "Banner",
-        CompositionCategory::Text(_) => "Text",
+        CompositionCategory::Paragraph(_) => "Text",
     }
     .to_string()
         + if is_type == true { "Type" } else { "" }

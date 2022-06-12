@@ -5,7 +5,7 @@ use crate::{
     compositions::{carousels::carousel_enums::CarouselType, CompositionCategory},
 };
 use crate::compositions::banners::banner_enums::BannerType;
-use crate::compositions::texts::text_enums::TextType;
+use crate::compositions::paragraphs::paragraph_enums::ParagraphType;
 use crate::gencode::gen_managers::helpers::get_composition_name::get_composition_name;
 use crate::gencode::gen_managers::helpers::get_composition_paths;
 use crate::gencode::gen_managers::helpers::get_mod::get_mod;
@@ -78,12 +78,12 @@ impl ArmsBlock for Block {
                     );
                 }
             }
-            CompositionCategory::Text(_) => {
-                for item in TextType::iter() {
+            CompositionCategory::Paragraph(_) => {
+                for item in ParagraphType::iter() {
                     self.add_arm(
                         &crud_operation,
                         format!("{:?}", item),
-                        CompositionCategory::Text(item),
+                        CompositionCategory::Paragraph(item),
                         &method_type,
                     );
                 }

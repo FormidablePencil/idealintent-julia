@@ -1,19 +1,19 @@
 use strum_macros::{EnumIter, EnumString};
 use crate::compositions::base_comp_result::BaseCompResult;
 
-use crate::compositions::texts::text_basic::TextBasicRes;
+use crate::compositions::paragraphs::paragraph_basic::ParagraphBasicRes;
 
 #[derive(Debug, EnumIter, EnumString)]
-pub enum TextType {
+pub enum ParagraphType {
     Basic,
 }
 
-pub enum TextSuccessCode {}
+pub enum ParagraphSuccessCode {}
 
-pub enum TextFailureCode {}
+pub enum ParagraphFailureCode {}
 
-pub type TextResult<Response> = BaseCompResult<Response, TextSuccessCode, TextFailureCode>;
+pub type ParagraphResult<Response> = BaseCompResult<Response, ParagraphSuccessCode, ParagraphFailureCode>;
 
-pub enum TextResponse {
-    Basic(TextResult<TextBasicRes>),
+pub enum ParagraphResponse {
+    Basic(ParagraphResult<ParagraphBasicRes>),
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+
+
 class BrowserScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Center(
         child: FlatButton(
           child: Text('BrowserScreen'),
@@ -25,7 +26,6 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Center(
         child: FlatButton(
           child: Text('Pop!'),

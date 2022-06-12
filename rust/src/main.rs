@@ -1,3 +1,15 @@
+use lib_flutter_rust_bridge_codegen::{frb_codegen, Opts};
+
+fn main() {
+    println!("cargo:rerun-if-changed={}", "src/api.rs");
+    frb_codegen(Opts {
+        rust_input: "src/api.rs".to_string(),
+        dart_output: "../lib/bridge_generated.dart".to_string(),
+        ..Default::default()
+    }
+    ).unwrap();
+}
+
 // // dependency injection?
 //
 // // Access the models directly without the need of the hierarchy; service, manager, repository.
@@ -143,4 +155,3 @@
 // //     Err(e) => eprintln!("error adding file: {}", e),
 // // }
 // // }
-// fn main() {}

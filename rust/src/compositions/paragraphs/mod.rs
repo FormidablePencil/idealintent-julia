@@ -1,3 +1,3 @@
 pub mod manager;
-pub mod text_basic;
-pub mod text_enums;
+pub mod paragraph_basic;
+pub mod paragraph_enums;

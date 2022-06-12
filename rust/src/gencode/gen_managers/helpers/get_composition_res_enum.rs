@@ -12,6 +12,6 @@ pub fn get_composition_res_enum(composition_category: &CompositionCategory) -> S
         CompositionCategory::Banner(comp_type) => match comp_type {
             BannerType::Basic => "BannerRes".to_string(),
         },
-        CompositionCategory::Text(_) => todo!(),
+        CompositionCategory::Paragraph(_) => todo!(),
     }
 }

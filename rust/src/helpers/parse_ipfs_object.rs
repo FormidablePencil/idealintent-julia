@@ -76,14 +76,14 @@ mod parse_ipfs_object {
     use ipfs_api_backend_actix::{IpfsApi, IpfsClient};
 
     use crate::helpers::parse_ipfs_object::{DataWrapper, get_data, parse_ipfs_object};
-    use crate::temp_smart_contract_address_maps::crud_text;
-    use crate::temp_smart_contract_address_maps::crud_text::BasicText;
+    use crate::temp_smart_contract_address_maps::crud_paragraph;
+    use crate::temp_smart_contract_address_maps::crud_paragraph::BasicParagraph;
 
     fn req() -> DataWrapper {
         DataWrapper {
             data_type: "".to_string(), // todo
             metadata: "".to_string(), // todo
-            data: serde_json::to_string(&BasicText {
+            data: serde_json::to_string(&BasicParagraph {
                 title: String::from("title df df df"),
                 body: String::from("body 00 0  df"),
             }).unwrap(),
@@ -92,7 +92,7 @@ mod parse_ipfs_object {
 
     #[actix_rt::test]
     async fn get_ipfs_content_test() {
-        let address = crud_text::upload(
+        let address = crud_paragraph::upload(
             &req(),
             None,
         ).await;
@@ -111,7 +111,7 @@ mod parse_ipfs_object {
      */
     #[actix_rt::test]
     async fn parse_ipfs_object_test() {
-        let address = crud_text::upload(
+        let address = crud_paragraph::upload(
             &req(),
             None,
         ).await;

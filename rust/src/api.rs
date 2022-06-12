@@ -5,19 +5,51 @@ use anyhow::{anyhow, Ok, Result};
 use flutter_rust_bridge::ZeroCopyBuffer;
 use futures::executor::block_on;
 use ipfs_api_backend_actix::Error;
+use crate::compositions::banners::banner_enums::BannerType;
+use crate::compositions::carousels::carousel_enums::CarouselType;
+use crate::compositions::CompositionCategory;
+use crate::compositions::paragraphs::paragraph_enums::ParagraphType;
 
 use crate::helpers::parse_ipfs_object::DataWrapper;
-use crate::temp_smart_contract_address_maps::crud_text;
-use crate::temp_smart_contract_address_maps::crud_text::BasicText;
+use crate::temp_smart_contract_address_maps::crud_paragraph;
+use crate::temp_smart_contract_address_maps::crud_paragraph::BasicParagraph;
 
+use flutter_rust_bridge::*;
+pub use crate::compositions_api::test_success_2;
+
+// require!("compositions_api.rs");
 //
 // NOTE: Please look at https://github.com/fzyzcjy/flutter_rust_bridge/blob/master/frb_example/simple/rust/src/api.rs
 // to see more types that this code generator can generate.
 //
+// #[derive(Debug)] // todo - remove debug
+// pub enum CompositionCategory {
+//     Carousel(CarouselType),
+//     Banner(BannerType),
+//     Text(TextType),
+// }
 
-pub fn upload(content: BasicText, secret_encryption_key: Option<String>) -> String {
+// pub enum KK {
+// Dd
+// }
+//
+// pub enum CompositionCategory2 {
+//     Carousel(),
+//     Banner(),
+//     Text(KK),
+// }
+pub fn temp(composition_category: CompositionCategory) -> String {
+    String::from("h")
+}
+
+pub fn temp2() -> String {
+    String::from("h")
+}
+
+
+pub fn upload(content: BasicParagraph, secret_encryption_key: Option<String>) -> String {
     Runtime::new().unwrap().block_on(async {
-        crud_text::upload(
+        crud_paragraph::upload(
             &DataWrapper {
                 data_type: "".to_string(), // todo - composition data_type
                 metadata: "".to_string(),  // todo - depending on the content, change data_type
@@ -33,7 +65,7 @@ pub fn get(address: String) -> Result<Option<DataWrapper>> {
     match Runtime::new()
         .unwrap()
         .block_on(async {
-            crud_text::get(address.as_str()).await
+            crud_paragraph::get(address.as_str()).await
         }) {
         Result::Ok(r) => Ok(r),
         Err(e) => Err(anyhow!(format!("{:?}", e)))

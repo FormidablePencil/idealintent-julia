@@ -7,8 +7,8 @@ mod compositions_test {
     use crate::compositions::carousels::carousel_basic::CarouselBasicRes;
     use crate::compositions::carousels::carousel_enums::{CarouselResponse, CarouselResult};
     use crate::compositions::carousels::manager::CarouselManager;
-    use crate::compositions::texts::manager::TextManager;
-    use crate::compositions::texts::text_enums::TextType;
+    use crate::compositions::paragraphs::manager::TextManager;
+    use crate::compositions::paragraphs::paragraph_enums::ParagraphType;
     use crate::space::layout;
 
     #[test]
@@ -18,7 +18,7 @@ mod compositions_test {
             carousel_manager: CarouselManager,
             banner_manager: BannerManager,
         };
-        let composition_type = &CompositionCategory::Text(TextType::Basic);
+        let composition_type = &CompositionCategory::Paragraph(ParagraphType::Basic);
         let carousel_basic = CarouselBasicRes {};
 
         // region setup todo - move to a reusable user flow

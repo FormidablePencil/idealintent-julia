@@ -15,15 +15,46 @@ use flutter_rust_bridge::*;
 
 // Section: imports
 
+use crate::compositions::banners::banner_enums::BannerType;
+use crate::compositions::carousels::carousel_enums::CarouselType;
+use crate::compositions::paragraphs::paragraph_enums::ParagraphType;
+use crate::compositions::CompositionCategory;
 use crate::helpers::parse_ipfs_object::DataWrapper;
-use crate::temp_smart_contract_address_maps::crud_text::BasicText;
+use crate::temp_smart_contract_address_maps::crud_paragraph::BasicParagraph;
 
 // Section: wire functions
 
 #[no_mangle]
+pub extern "C" fn wire_temp(port_: i64, composition_category: *mut wire_CompositionCategory) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
+        WrapInfo {
+            debug_name: "temp",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || {
+            let api_composition_category = composition_category.wire2api();
+            move |task_callback| Ok(temp(api_composition_category))
+        },
+    )
+}
+
+#[no_mangle]
+pub extern "C" fn wire_temp2(port_: i64) {
+    FLUTTER_RUST_BRIDGE_HANDLER.wrap(
+        WrapInfo {
+            debug_name: "temp2",
+            port: Some(port_),
+            mode: FfiCallMode::Normal,
+        },
+        move || move |task_callback| Ok(temp2()),
+    )
+}
+
+#[no_mangle]
 pub extern "C" fn wire_upload(
     port_: i64,
-    content: *mut wire_BasicText,
+    content: *mut wire_BasicParagraph,
     secret_encryption_key: *mut wire_uint_8_list,
 ) {
     FLUTTER_RUST_BRIDGE_HANDLER.wrap(
@@ -247,7 +278,7 @@ pub extern "C" fn wire_off_topic_deliberately_panic(port_: i64) {
 
 #[repr(C)]
 #[derive(Clone)]
-pub struct wire_BasicText {
+pub struct wire_BasicParagraph {
     title: *mut wire_uint_8_list,
     body: *mut wire_uint_8_list,
 }
@@ -294,6 +325,38 @@ pub struct wire_uint_8_list {
     len: i32,
 }
 
+#[repr(C)]
+#[derive(Clone)]
+pub struct wire_CompositionCategory {
+    tag: i32,
+    kind: *mut CompositionCategoryKind,
+}
+
+#[repr(C)]
+pub union CompositionCategoryKind {
+    Carousel: *mut CompositionCategory_Carousel,
+    Banner: *mut CompositionCategory_Banner,
+    Paragraph: *mut CompositionCategory_Paragraph,
+}
+
+#[repr(C)]
+#[derive(Clone)]
+pub struct CompositionCategory_Carousel {
+    field0: i32,
+}
+
+#[repr(C)]
+#[derive(Clone)]
+pub struct CompositionCategory_Banner {
+    field0: i32,
+}
+
+#[repr(C)]
+#[derive(Clone)]
+pub struct CompositionCategory_Paragraph {
+    field0: i32,
+}
+
 // Section: wrapper structs
 
 // Section: static checks
@@ -301,8 +364,13 @@ pub struct wire_uint_8_list {
 // Section: allocate functions
 
 #[no_mangle]
-pub extern "C" fn new_box_autoadd_basic_text() -> *mut wire_BasicText {
-    support::new_leak_box_ptr(wire_BasicText::new_with_null_ptr())
+pub extern "C" fn new_box_autoadd_basic_paragraph() -> *mut wire_BasicParagraph {
+    support::new_leak_box_ptr(wire_BasicParagraph::new_with_null_ptr())
+}
+
+#[no_mangle]
+pub extern "C" fn new_box_autoadd_composition_category() -> *mut wire_CompositionCategory {
+    support::new_leak_box_ptr(wire_CompositionCategory::new_with_null_ptr())
 }
 
 #[no_mangle]
@@ -373,17 +441,33 @@ impl Wire2Api<String> for *mut wire_uint_8_list {
     }
 }
 
-impl Wire2Api<BasicText> for wire_BasicText {
-    fn wire2api(self) -> BasicText {
-        BasicText {
+impl Wire2Api<BannerType> for i32 {
+    fn wire2api(self) -> BannerType {
+        match self {
+            0 => BannerType::Basic,
+            _ => unreachable!("Invalid variant for BannerType: {}", self),
+        }
+    }
+}
+
+impl Wire2Api<BasicParagraph> for wire_BasicParagraph {
+    fn wire2api(self) -> BasicParagraph {
+        BasicParagraph {
             title: self.title.wire2api(),
             body: self.body.wire2api(),
         }
     }
 }
 
-impl Wire2Api<BasicText> for *mut wire_BasicText {
-    fn wire2api(self) -> BasicText {
+impl Wire2Api<BasicParagraph> for *mut wire_BasicParagraph {
+    fn wire2api(self) -> BasicParagraph {
+        let wrap = unsafe { support::box_from_leak_ptr(self) };
+        (*wrap).wire2api().into()
+    }
+}
+
+impl Wire2Api<CompositionCategory> for *mut wire_CompositionCategory {
+    fn wire2api(self) -> CompositionCategory {
         let wrap = unsafe { support::box_from_leak_ptr(self) };
         (*wrap).wire2api().into()
     }
@@ -407,6 +491,40 @@ impl Wire2Api<TreeNode> for *mut wire_TreeNode {
     fn wire2api(self) -> TreeNode {
         let wrap = unsafe { support::box_from_leak_ptr(self) };
         (*wrap).wire2api().into()
+    }
+}
+
+impl Wire2Api<CarouselType> for i32 {
+    fn wire2api(self) -> CarouselType {
+        match self {
+            0 => CarouselType::Basic,
+            1 => CarouselType::BlurredOverlay,
+            2 => CarouselType::Images,
+            _ => unreachable!("Invalid variant for CarouselType: {}", self),
+        }
+    }
+}
+
+impl Wire2Api<CompositionCategory> for wire_CompositionCategory {
+    fn wire2api(self) -> CompositionCategory {
+        match self.tag {
+            0 => unsafe {
+                let ans = support::box_from_leak_ptr(self.kind);
+                let ans = support::box_from_leak_ptr(ans.Carousel);
+                CompositionCategory::Carousel(ans.field0.wire2api())
+            },
+            1 => unsafe {
+                let ans = support::box_from_leak_ptr(self.kind);
+                let ans = support::box_from_leak_ptr(ans.Banner);
+                CompositionCategory::Banner(ans.field0.wire2api())
+            },
+            2 => unsafe {
+                let ans = support::box_from_leak_ptr(self.kind);
+                let ans = support::box_from_leak_ptr(ans.Paragraph);
+                CompositionCategory::Paragraph(ans.field0.wire2api())
+            },
+            _ => unreachable!(),
+        }
     }
 }
 
@@ -439,6 +557,15 @@ impl Wire2Api<Vec<TreeNode>> for *mut wire_list_tree_node {
             support::vec_from_leak_ptr(wrap.ptr, wrap.len)
         };
         vec.into_iter().map(Wire2Api::wire2api).collect()
+    }
+}
+
+impl Wire2Api<ParagraphType> for i32 {
+    fn wire2api(self) -> ParagraphType {
+        match self {
+            0 => ParagraphType::Basic,
+            _ => unreachable!("Invalid variant for ParagraphType: {}", self),
+        }
     }
 }
 
@@ -496,13 +623,49 @@ impl<T> NewWithNullPtr for *mut T {
     }
 }
 
-impl NewWithNullPtr for wire_BasicText {
+impl NewWithNullPtr for wire_BasicParagraph {
     fn new_with_null_ptr() -> Self {
         Self {
             title: core::ptr::null_mut(),
             body: core::ptr::null_mut(),
         }
     }
+}
+
+impl NewWithNullPtr for wire_CompositionCategory {
+    fn new_with_null_ptr() -> Self {
+        Self {
+            tag: -1,
+            kind: core::ptr::null_mut(),
+        }
+    }
+}
+
+#[no_mangle]
+pub extern "C" fn inflate_CompositionCategory_Carousel() -> *mut CompositionCategoryKind {
+    support::new_leak_box_ptr(CompositionCategoryKind {
+        Carousel: support::new_leak_box_ptr(CompositionCategory_Carousel {
+            field0: Default::default(),
+        }),
+    })
+}
+
+#[no_mangle]
+pub extern "C" fn inflate_CompositionCategory_Banner() -> *mut CompositionCategoryKind {
+    support::new_leak_box_ptr(CompositionCategoryKind {
+        Banner: support::new_leak_box_ptr(CompositionCategory_Banner {
+            field0: Default::default(),
+        }),
+    })
+}
+
+#[no_mangle]
+pub extern "C" fn inflate_CompositionCategory_Paragraph() -> *mut CompositionCategoryKind {
+    support::new_leak_box_ptr(CompositionCategoryKind {
+        Paragraph: support::new_leak_box_ptr(CompositionCategory_Paragraph {
+            field0: Default::default(),
+        }),
+    })
 }
 
 impl NewWithNullPtr for wire_Point {

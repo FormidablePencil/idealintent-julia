@@ -3,7 +3,7 @@ extern crate proc_macro;
 use std::any::Any;
 
 use carousels::carousel_enums::CarouselResponse;
-use texts::text_enums::{TextResponse, TextType};
+use paragraphs::paragraph_enums::{ParagraphResponse, ParagraphType};
 
 use crate::compositions::banners::banner_enums::BannerResponse;
 use crate::compositions::carousels::manager::CarouselManager;
@@ -15,13 +15,13 @@ use self::{
     },
     carousels::carousel_enums::CarouselType,
     manager_impl::CompositionTypeManager,
-    texts::manager::TextManager,
+    paragraphs::manager::TextManager,
 };
 
 pub mod banners;
 pub mod carousels;
 pub mod manager_impl;
-pub mod texts;
+pub mod paragraphs;
 mod base_comp_result;
 mod crud;
 mod composition_relationships;
@@ -49,17 +49,16 @@ pub struct CategoryManager {
     pub(crate) banner_manager: BannerManager,
 }
 
-#[derive(Debug)]
 pub enum CompositionCategory {
     Carousel(CarouselType),
     Banner(BannerType),
-    Text(TextType),
+    Paragraph(ParagraphType),
 }
 
 pub enum CategoryResponse {
     Carousel(CarouselResponse),
     Banner(BannerResponse),
-    Text(TextResponse),
+    Paragraph(ParagraphResponse),
 }
 
 // endregion enum and structs
@@ -117,7 +116,7 @@ impl ICategoryManager for CategoryManager {
                 self.banner_manager
                     .get_public(comp_type, composition_source_id),
             ),
-            CompositionCategory::Text(comp_type) => CategoryResponse::Text(
+            CompositionCategory::Paragraph(comp_type) => CategoryResponse::Paragraph(
                 self.text_manager
                     .get_public(comp_type, composition_source_id),
             ),
@@ -139,7 +138,7 @@ impl ICategoryManager for CategoryManager {
                 self.banner_manager
                     .get_private(comp_type, composition_source_id, author_id),
             ),
-            CompositionCategory::Text(comp_type) => CategoryResponse::Text(
+            CompositionCategory::Paragraph(comp_type) => CategoryResponse::Paragraph(
                 self.text_manager
                     .get_private(comp_type, composition_source_id, author_id),
             ),
@@ -162,7 +161,7 @@ impl ICategoryManager for CategoryManager {
                 self.banner_manager
                     .create(comp_type, create_request, layout_id, author_id),
             ),
-            CompositionCategory::Text(comp_type) => CategoryResponse::Text(
+            CompositionCategory::Paragraph(comp_type) => CategoryResponse::Paragraph(
                 self.text_manager
                     .create(comp_type, create_request, layout_id, author_id),
             ),

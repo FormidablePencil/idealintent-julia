@@ -1,5 +1,8 @@
+mod addressing;
+
+use std::mem;
+
 use borsh::BorshDeserialize;
-use helloworld::{process_instruction, GreetingAccount};
 use solana_program_test::*;
 use solana_sdk::{
     account::Account,
@@ -8,7 +11,8 @@ use solana_sdk::{
     signature::Signer,
     transaction::Transaction,
 };
-use std::mem;
+
+use helloworld::{GreetingAccount, process_instruction};
 
 #[tokio::test]
 async fn test_helloworld() {
@@ -16,7 +20,7 @@ async fn test_helloworld() {
     let greeted_pubkey = Pubkey::new_unique();
 
     let mut program_test = ProgramTest::new(
-        "helloworld", // Run the BPF version with `cargo test-bpf`
+        "smart_contracts", // Run the BPF version with `cargo test-bpf`
         program_id,
         processor!(process_instruction), // Run the native version with `cargo test`
     );

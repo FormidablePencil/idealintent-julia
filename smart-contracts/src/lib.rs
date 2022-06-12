@@ -1,12 +1,16 @@
+#![cfg(not(feature = "no-entrypoint"))]
+
 use borsh::{BorshDeserialize, BorshSerialize};
 use solana_program::{
-    account_info::{next_account_info, AccountInfo},
+    account_info::{AccountInfo, next_account_info},
     entrypoint,
     entrypoint::ProgramResult,
     msg,
     program_error::ProgramError,
     pubkey::Pubkey,
 };
+
+pub mod addressing;
 
 /// Define the type of state stored in accounts
 #[derive(BorshSerialize, BorshDeserialize, Debug)]
@@ -26,6 +30,7 @@ pub fn process_instruction(
 ) -> ProgramResult {
     msg!("Hello World Rust program entrypoint");
 
+    let f = GreetingAccount::from_be_bytes(_instruction_data);
     // Iterating accounts is safer than indexing
     let accounts_iter = &mut accounts.iter();
 
@@ -51,9 +56,11 @@ pub fn process_instruction(
 // Sanity tests
 #[cfg(test)]
 mod test {
-    use super::*;
-    use solana_program::clock::Epoch;
     use std::mem;
+
+    use solana_program::clock::Epoch;
+
+    use super::*;
 
     #[test]
     fn test_sanity() {

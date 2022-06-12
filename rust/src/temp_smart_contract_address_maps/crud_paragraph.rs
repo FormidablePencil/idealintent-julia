@@ -67,7 +67,7 @@ fn delete(address: String) {}
 mod smart_contract_address_maps_tests {
     use std::str::from_utf8;
 
-    use crate::{helpers::parse_ipfs_object::DataWrapper, temp_smart_contract_address_maps::crud_text::{BasicParagraph, get, upload}};
+    use crate::{helpers::parse_ipfs_object::DataWrapper, temp_smart_contract_address_maps::crud_paragraph::{BasicParagraph, get, upload}};
 
     #[actix_rt::test]
     async fn crud() {

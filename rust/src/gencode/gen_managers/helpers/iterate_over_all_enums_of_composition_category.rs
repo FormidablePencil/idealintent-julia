@@ -2,7 +2,7 @@ use strum::IntoEnumIterator;
 
 use crate::compositions::{carousels::carousel_enums::CarouselType, CompositionCategory};
 use crate::compositions::banners::banner_enums::BannerType;
-use crate::compositions::texts::text_enums::TextType;
+use crate::compositions::paragraphs::paragraph_enums::ParagraphType;
 
 pub fn iterate_over_all_enums_of_composition_category(
     composition_category: &CompositionCategory,
@@ -19,9 +19,9 @@ pub fn iterate_over_all_enums_of_composition_category(
                 callback(CompositionCategory::Banner(item));
             }
         }
-        CompositionCategory::Text(_) => {
-            for item in TextType::iter() {
-                callback(CompositionCategory::Text(item));
+        CompositionCategory::Paragraph(_) => {
+            for item in ParagraphType::iter() {
+                callback(CompositionCategory::Paragraph(item));
             }
         }
     }

@@ -83,18 +83,6 @@ Widget buildPageUi(String? content /*Uint8List? exampleImage, String? exampleTex
     ),
   );
 }
-//
-// TreeNode createExampleTree() => TreeNode(name: 'root', children: [
-//       for (var i = 0; i < 1 + Random().nextInt(2); ++i)
-//         TreeNode(name: 'child_$i', children: [
-//           for (var j = 0; j < 1 + Random().nextInt(2); ++j)
-//             TreeNode(name: 'grandchild_$j', children: [])
-//         ]),
-//     ]);
-//
-// final examplePoint = Point(
-//     x: 0.3602404434376143632361252444495453084826078079585857504883758147401953460592181003117529367227734263962337317297249877373200353726832853176645324012185215795,
-//     y: -0.6413130610648031748603750151793020665794949522823052595561775430644485741727536902556370230689681162370740565537072149790106973211105273740851993394803287437606238596262);
 
 class AnimatedReplaceableImage extends StatefulWidget {
   final ImageProvider image;
@@ -148,3 +136,20 @@ double generateScale() {
 
 void runPeriodically(void Function() callback) =>
     Timer.periodic(const Duration(milliseconds: 500), (timer) => callback());
+
+class MyWidget extends StatelessWidget {
+  MyWidget();
+  MyWidget.forDesignTime();
+
+  @override
+  Widget build(BuildContext context) {
+    return new Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        new Text('A'),
+        new Text('BB'),
+        new Text('CCC'),
+      ],
+    );
+  }
+}

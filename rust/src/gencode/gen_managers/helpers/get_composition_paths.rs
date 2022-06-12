@@ -5,7 +5,7 @@ pub fn get_comp_path(composition_category: &CompositionCategory) -> String {
     match composition_category {
         CompositionCategory::Carousel(_) => "crate::compositions::carousels",
         CompositionCategory::Banner(_) => "crate::compositions::banners",
-        CompositionCategory::Text(_) => "crate::compositions::texts",
+        CompositionCategory::Paragraph(_) => "crate::compositions::paragraphs",
     }.to_string()
 }
 
@@ -28,7 +28,7 @@ pub fn get_composition_create_request_path(
         match composition_category {
             CompositionCategory::Carousel(_) => setup(&composition_category),
             CompositionCategory::Banner(_) => setup(&composition_category),
-            CompositionCategory::Text(_) => setup(&composition_category),
+            CompositionCategory::Paragraph(_) => setup(&composition_category),
         }
     }
 

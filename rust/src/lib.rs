@@ -10,3 +10,4 @@ pub mod account;
 mod temp_smart_contract_address_maps;
 mod helpers;
 mod compositions_api;
+mod build;

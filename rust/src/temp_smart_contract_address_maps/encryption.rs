@@ -25,12 +25,12 @@ fn decrypt(secret_key: &[u8], ciphertext: Vec<u8>) -> Vec<u8> {
 #[cfg(test)]
 mod data_encryption {
     use std::str::from_utf8;
-    use crate::temp_smart_contract_address_maps::crud_text::BasicText;
+    use crate::temp_smart_contract_address_maps::crud_paragraph::BasicParagraph;
     use crate::temp_smart_contract_address_maps::encryption::{decrypt, encrypt};
 
     #[test]
     fn encryption() {
-        let data = BasicText {
+        let data = BasicParagraph {
             title: String::from("title"),
             body: String::from("body"),
         };
@@ -43,7 +43,7 @@ mod data_encryption {
 
         assert_eq!(&decrypted_data, &serialized_data.as_bytes());
 
-        let deserialized_data = serde_json::from_slice::<BasicText>(&decrypted_data).unwrap();
+        let deserialized_data = serde_json::from_slice::<BasicParagraph>(&decrypted_data).unwrap();
         println!("{:?}, {:?}", data, deserialized_data);
         println!("{}", from_utf8(&decrypted_data.as_slice()).unwrap());
     }

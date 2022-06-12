@@ -54,7 +54,7 @@ mod carousel {
     use crate::compositions::banners::banner_enums::BannerType;
     use crate::compositions::carousels::carousel_enums::CarouselType;
     use crate::compositions::CompositionCategory;
-    use crate::compositions::texts::text_enums::TextType;
+    use crate::compositions::paragraphs::paragraph_enums::ParagraphType;
 
     use super::impl_composition_type_manager;
 
@@ -63,7 +63,7 @@ mod carousel {
         impl_composition_type_manager(
             // CompositionCategory::Banner(BannerType::Basic),
             // CompositionCategory::Carousel(CarouselType::Basic),
-            CompositionCategory::Text(TextType::Basic),
+            CompositionCategory::Paragraph(ParagraphType::Basic),
         );
     }
 }
