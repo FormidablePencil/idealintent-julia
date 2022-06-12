@@ -11,7 +11,7 @@ use crate::helpers::parse_ipfs_object::{DataWrapper, get_data};
 use crate::temp_smart_contract_address_maps::encryption;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct BasicText {
+pub struct BasicParagraph {
     pub title: String,
     pub body: String,
 }
@@ -67,7 +67,7 @@ fn delete(address: String) {}
 mod smart_contract_address_maps_tests {
     use std::str::from_utf8;
 
-    use crate::{helpers::parse_ipfs_object::DataWrapper, temp_smart_contract_address_maps::crud_text::{BasicText, get, upload}};
+    use crate::{helpers::parse_ipfs_object::DataWrapper, temp_smart_contract_address_maps::crud_text::{BasicParagraph, get, upload}};
 
     #[actix_rt::test]
     async fn crud() {
@@ -78,7 +78,7 @@ mod smart_contract_address_maps_tests {
         let address = upload(&DataWrapper {
             data_type: "".to_string(), // todo
             metadata: "".to_string(), // todo
-            data: serde_json::to_string(&BasicText {
+            data: serde_json::to_string(&BasicParagraph {
                 title: String::from("title df df df"),
                 body: String::from("body 00 0  df"),
             }).unwrap(),

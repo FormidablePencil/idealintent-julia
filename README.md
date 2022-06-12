@@ -1,7 +1,11 @@
-## Flutter + Rust example for `flutter_rust_bridge`
+# IdealIntent Julia
 
-In order to build and run this example, please visit [the tutorial section](https://github.com/fzyzcjy/flutter_rust_bridge#-tutorial-a-flutterrust-app) of repository readme.
+## Architecture
 
-For a pure-Dart example without UI, please see the `pure_dart` example which is a neighbor of this example.
+src/api.rs contain the functions that call the actual code. Later on
+api will be split up to encapsulate functionalities such as one for
+account related and another for compositions related.
 
-For full documentation, please see README.md of the main repository.
+## Run codegen flutter rust bridge
+
+flutter_rust_bridge_codegen --rust-input rust/src/api.rs --dart-output lib/bridge_generated.dart --c-output ios/Runner/bridge_generated.h                                      ─╯

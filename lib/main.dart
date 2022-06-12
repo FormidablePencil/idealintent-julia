@@ -10,7 +10,7 @@ import 'package:idealintent_julia/off_topic_code.dart';
 // Simple Flutter code. If you are not familiar with Flutter, this may sounds a bit long. But indeed
 // it is quite trivial and Flutter is just like that. Please refer to Flutter's tutorial to learn Flutter.
 
-const base = 'flutter_rust_bridge_example';
+const base = 'idealintent_julia';
 final path = Platform.isWindows ? '$base.dll' : 'lib$base.so';
 late final dylib = Platform.isIOS
     ? DynamicLibrary.process()
