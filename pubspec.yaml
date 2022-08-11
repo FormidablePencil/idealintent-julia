@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   freezed: ^2.0.3+1
   todo: ^2.0.1
+  flutter_quill: ^5.0.3
+  provider: ^6.0.3
 
 dev_dependencies:
   flutter_test:

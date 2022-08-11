@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:idealintent_julia/compositions/texts/TextBasic.dart';
-import 'package:todo/todo.dart';
 
 import '../bridge_generated.dart';
 

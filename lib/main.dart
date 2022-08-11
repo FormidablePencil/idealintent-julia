@@ -4,11 +4,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart' hide Size;
 import 'package:idealintent_julia/bridge_generated.dart';
-    // as api_bridge_generated;
+
+// as api_bridge_generated;
 // import 'package:idealintent_julia/compositions_api_bridge_generated.dart'
 //     as compositions_api_bridge_generated;
 import 'package:idealintent_julia/screens/BrowserScreen.dart';
 import 'package:idealintent_julia/screens/PersonalPortfolioScreen.dart';
+import 'package:idealintent_julia/ContentProvider.dart';
+import 'package:provider/provider.dart';
 
 // Simple Flutter code. If you are not familiar with Flutter, this may sounds a bit long. But indeed
 // it is quite trivial and Flutter is just like that. Please refer to Flutter's tutorial to learn Flutter.
@@ -25,7 +28,14 @@ late final api = FlutterRustBridgeExampleImpl(dylib);
 //     compositions_api_bridge_generated.JuliaRustImpl(dylib);
 // late final compositions_api = JuliaImpl(dylib);
 
-void main() => runApp(const MyApp());
+void main() => runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => ContentProvider()),
+        ],
+        child: const MyApp(),
+      ),
+    );
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
